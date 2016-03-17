@@ -1,0 +1,429 @@
+
+attiny10-rgb-hello.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000022e  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000004  00800040  0000022e  000002c2  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000006  00800044  00800044  000002c6  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000002c6  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002f8  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000028  00000000  00000000  00000334  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000002a0  00000000  00000000  0000035c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000000e1  00000000  00000000  000005fc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000000c8  00000000  00000000  000006dd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  0000005c  00000000  00000000  000007a8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000001ba  00000000  00000000  00000804  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000001cc  00000000  00000000  000009be  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  00000b8a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	2c c0       	rjmp	.+88     	; 0x5c <__bad_interrupt>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	29 c0       	rjmp	.+82     	; 0x5e <__vector_5>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+
+00000016 <__trampolines_end>:
+  16:	ff ff       	.word	0xffff	; ????
+  18:	00 7f       	andi	r16, 0xF0	; 240
+	...
+
+0000001b <green>:
+  1b:	ff 00 7f 00 ff                                      .....
+
+00000020 <red>:
+  20:	00 ff ff 7f ff 00                                   ......
+
+00000026 <__ctors_end>:
+  26:	11 27       	eor	r17, r17
+  28:	1f bf       	out	0x3f, r17	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d0 e0       	ldi	r29, 0x00	; 0
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	20 e0       	ldi	r18, 0x00	; 0
+  34:	a0 e4       	ldi	r26, 0x40	; 64
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	ee e2       	ldi	r30, 0x2E	; 46
+  3a:	f2 e4       	ldi	r31, 0x42	; 66
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	31 91       	ld	r19, Z+
+  40:	3d 93       	st	X+, r19
+  42:	a4 34       	cpi	r26, 0x44	; 68
+  44:	b2 07       	cpc	r27, r18
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+
+00000048 <__do_clear_bss>:
+  48:	20 e0       	ldi	r18, 0x00	; 0
+  4a:	a4 e4       	ldi	r26, 0x44	; 68
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 93       	st	X+, r17
+
+00000052 <.do_clear_bss_start>:
+  52:	aa 34       	cpi	r26, 0x4A	; 74
+  54:	b2 07       	cpc	r27, r18
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	54 d0       	rcall	.+168    	; 0x102 <main>
+  5a:	e7 c0       	rjmp	.+462    	; 0x22a <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <__vector_5>:
+const unsigned char blue[]  PROGMEM = {255, 255,    0, 127,   0};
+volatile unsigned char rgb[] = {255, 255, 255};
+
+// interrupt for Compare A
+ISR(TIM0_COMPA_vect)
+{
+  5e:	1f 93       	push	r17
+  60:	0f 93       	push	r16
+  62:	0f b7       	in	r16, 0x3f	; 63
+  64:	0f 93       	push	r16
+  66:	10 e0       	ldi	r17, 0x00	; 0
+  68:	4f 93       	push	r20
+  6a:	5f 93       	push	r21
+  6c:	6f 93       	push	r22
+  6e:	7f 93       	push	r23
+  70:	ef 93       	push	r30
+  72:	ff 93       	push	r31
+	// turn on/off according to PWM value
+	if (pwmCount > rgb[0]) {
+  74:	e0 e4       	ldi	r30, 0x40	; 64
+  76:	f0 e0       	ldi	r31, 0x00	; 0
+  78:	50 81       	ld	r21, Z
+  7a:	e9 e4       	ldi	r30, 0x49	; 73
+  7c:	f0 e0       	ldi	r31, 0x00	; 0
+  7e:	40 81       	ld	r20, Z
+  80:	54 17       	cp	r21, r20
+  82:	10 f4       	brcc	.+4      	; 0x88 <__stack+0x29>
+		PORTB &= ~(1 << PB0);
+  84:	10 98       	cbi	0x02, 0	; 2
+  86:	01 c0       	rjmp	.+2      	; 0x8a <__stack+0x2b>
+	}
+	else {
+		PORTB |= (1 << PB0);
+  88:	10 9a       	sbi	0x02, 0	; 2
+	}
+	if (pwmCount > rgb[1]) {
+  8a:	e0 e4       	ldi	r30, 0x40	; 64
+  8c:	f0 e0       	ldi	r31, 0x00	; 0
+  8e:	ef 5f       	subi	r30, 0xFF	; 255
+  90:	ff 4f       	sbci	r31, 0xFF	; 255
+  92:	50 81       	ld	r21, Z
+  94:	e9 e4       	ldi	r30, 0x49	; 73
+  96:	f0 e0       	ldi	r31, 0x00	; 0
+  98:	40 81       	ld	r20, Z
+  9a:	54 17       	cp	r21, r20
+  9c:	10 f4       	brcc	.+4      	; 0xa2 <__stack+0x43>
+		PORTB &= ~(1 << PB1);
+  9e:	11 98       	cbi	0x02, 1	; 2
+  a0:	01 c0       	rjmp	.+2      	; 0xa4 <__stack+0x45>
+	}
+	else {
+		PORTB |= (1 << PB1);
+  a2:	11 9a       	sbi	0x02, 1	; 2
+	}
+	if (pwmCount > rgb[2]) {
+  a4:	e0 e4       	ldi	r30, 0x40	; 64
+  a6:	f0 e0       	ldi	r31, 0x00	; 0
+  a8:	ee 5f       	subi	r30, 0xFE	; 254
+  aa:	ff 4f       	sbci	r31, 0xFF	; 255
+  ac:	50 81       	ld	r21, Z
+  ae:	e9 e4       	ldi	r30, 0x49	; 73
+  b0:	f0 e0       	ldi	r31, 0x00	; 0
+  b2:	40 81       	ld	r20, Z
+  b4:	54 17       	cp	r21, r20
+  b6:	10 f4       	brcc	.+4      	; 0xbc <__stack+0x5d>
+		PORTB &= ~(1 << PB2);
+  b8:	12 98       	cbi	0x02, 2	; 2
+  ba:	01 c0       	rjmp	.+2      	; 0xbe <__stack+0x5f>
+	}
+	else {
+		PORTB |= (1 << PB2);
+  bc:	12 9a       	sbi	0x02, 2	; 2
+	}
+	// increment PWM count
+	pwmCount++;
+  be:	e9 e4       	ldi	r30, 0x49	; 73
+  c0:	f0 e0       	ldi	r31, 0x00	; 0
+  c2:	40 81       	ld	r20, Z
+  c4:	4f 5f       	subi	r20, 0xFF	; 255
+  c6:	40 83       	st	Z, r20
+	
+	// increment interval counter
+	counter0++;
+  c8:	e5 e4       	ldi	r30, 0x45	; 69
+  ca:	f0 e0       	ldi	r31, 0x00	; 0
+  cc:	41 91       	ld	r20, Z+
+  ce:	51 91       	ld	r21, Z+
+  d0:	61 91       	ld	r22, Z+
+  d2:	70 81       	ld	r23, Z
+  d4:	e3 50       	subi	r30, 0x03	; 3
+  d6:	f0 40       	sbci	r31, 0x00	; 0
+  d8:	4f 5f       	subi	r20, 0xFF	; 255
+  da:	5f 4f       	sbci	r21, 0xFF	; 255
+  dc:	6f 4f       	sbci	r22, 0xFF	; 255
+  de:	7f 4f       	sbci	r23, 0xFF	; 255
+  e0:	41 93       	st	Z+, r20
+  e2:	51 93       	st	Z+, r21
+  e4:	61 93       	st	Z+, r22
+  e6:	70 83       	st	Z, r23
+  e8:	e3 50       	subi	r30, 0x03	; 3
+  ea:	f0 40       	sbci	r31, 0x00	; 0
+}
+  ec:	ff 91       	pop	r31
+  ee:	ef 91       	pop	r30
+  f0:	7f 91       	pop	r23
+  f2:	6f 91       	pop	r22
+  f4:	5f 91       	pop	r21
+  f6:	4f 91       	pop	r20
+  f8:	0f 91       	pop	r16
+  fa:	0f bf       	out	0x3f, r16	; 63
+  fc:	0f 91       	pop	r16
+  fe:	1f 91       	pop	r17
+ 100:	18 95       	reti
+
+00000102 <main>:
+
+int main(void)
+{	
+	// Set CPU speed by setting clock prescaler:
+	// CCP register must first be written with the correct signature - 0xD8
+	CCP = 0xD8;
+ 102:	48 ed       	ldi	r20, 0xD8	; 216
+ 104:	4c bf       	out	0x3c, r20	; 60
+	//  CLKPS[3:0] sets the clock division factor
+	CLKPSR = 0;
+ 106:	16 bf       	out	0x36, r17	; 54
+
+	// set up Output Compare A
+	// WGM[3:0] is set to 0010
+	// prescaler is set to clk/8 (010)
+	TCCR0A = 0;
+ 108:	1e bd       	out	0x2e, r17	; 46
+	TCCR0B = (1 << 1) | (1 << WGM02);
+ 10a:	4a e0       	ldi	r20, 0x0A	; 10
+ 10c:	4d bd       	out	0x2d, r20	; 45
+	// set Output Compare A value
+	OCR0A = 39;
+ 10e:	47 e2       	ldi	r20, 0x27	; 39
+ 110:	50 e0       	ldi	r21, 0x00	; 0
+ 112:	57 bd       	out	0x27, r21	; 39
+ 114:	46 bd       	out	0x26, r20	; 38
+	// enable Output Compare A Match interrupt
+	TIMSK0 |= (1 << OCIE0A); 
+ 116:	4b b5       	in	r20, 0x2b	; 43
+ 118:	42 60       	ori	r20, 0x02	; 2
+ 11a:	4b bd       	out	0x2b, r20	; 43
+	
+	// enable interrupts
+	sei();
+ 11c:	78 94       	sei
+	
+	// set pin directions
+	DDRB |= (1 << PB0) | (1 << PB1) | (1 << PB2);
+ 11e:	41 b1       	in	r20, 0x01	; 1
+ 120:	47 60       	ori	r20, 0x07	; 7
+ 122:	41 b9       	out	0x01, r20	; 1
+	
+	// set initial RGB value
+	rgb[0] = pgm_read_byte(&red[colorIndex]);
+ 124:	c4 e4       	ldi	r28, 0x44	; 68
+ 126:	d0 e0       	ldi	r29, 0x00	; 0
+ 128:	e8 81       	ld	r30, Y
+ 12a:	f0 e0       	ldi	r31, 0x00	; 0
+ 12c:	e0 5e       	subi	r30, 0xE0	; 224
+ 12e:	ff 4b       	sbci	r31, 0xBF	; 191
+ 130:	e0 81       	ld	r30, Z
+ 132:	a0 e4       	ldi	r26, 0x40	; 64
+ 134:	b0 e0       	ldi	r27, 0x00	; 0
+ 136:	ec 93       	st	X, r30
+	rgb[1] = pgm_read_byte(&green[colorIndex]);
+ 138:	e8 81       	ld	r30, Y
+ 13a:	f0 e0       	ldi	r31, 0x00	; 0
+ 13c:	e5 5e       	subi	r30, 0xE5	; 229
+ 13e:	ff 4b       	sbci	r31, 0xBF	; 191
+ 140:	e0 81       	ld	r30, Z
+ 142:	af 5f       	subi	r26, 0xFF	; 255
+ 144:	bf 4f       	sbci	r27, 0xFF	; 255
+ 146:	ec 93       	st	X, r30
+ 148:	a1 50       	subi	r26, 0x01	; 1
+ 14a:	b0 40       	sbci	r27, 0x00	; 0
+	rgb[2] = pgm_read_byte(&blue[colorIndex]);
+ 14c:	e8 81       	ld	r30, Y
+ 14e:	f0 e0       	ldi	r31, 0x00	; 0
+ 150:	ea 5e       	subi	r30, 0xEA	; 234
+ 152:	ff 4b       	sbci	r31, 0xBF	; 191
+ 154:	e0 81       	ld	r30, Z
+ 156:	ae 5f       	subi	r26, 0xFE	; 254
+ 158:	bf 4f       	sbci	r27, 0xFF	; 255
+ 15a:	ec 93       	st	X, r30
+	
+    // main loop
+    while (1) 
+    {
+		// change color every N cycles
+		if(counter0 % colorInterval == 0) {
+ 15c:	c5 e4       	ldi	r28, 0x45	; 69
+ 15e:	d0 e0       	ldi	r29, 0x00	; 0
+			colorIndex = (colorIndex + 1) % nColors;
+ 160:	24 e4       	ldi	r18, 0x44	; 68
+ 162:	30 e0       	ldi	r19, 0x00	; 0
+	
+    // main loop
+    while (1) 
+    {
+		// change color every N cycles
+		if(counter0 % colorInterval == 0) {
+ 164:	49 91       	ld	r20, Y+
+ 166:	59 91       	ld	r21, Y+
+ 168:	69 91       	ld	r22, Y+
+ 16a:	78 81       	ld	r23, Y
+ 16c:	c3 50       	subi	r28, 0x03	; 3
+ 16e:	d0 40       	sbci	r29, 0x00	; 0
+ 170:	5f 77       	andi	r21, 0x7F	; 127
+ 172:	66 27       	eor	r22, r22
+ 174:	77 27       	eor	r23, r23
+ 176:	45 2b       	or	r20, r21
+ 178:	46 2b       	or	r20, r22
+ 17a:	47 2b       	or	r20, r23
+ 17c:	99 f7       	brne	.-26     	; 0x164 <main+0x62>
+			colorIndex = (colorIndex + 1) % nColors;
+ 17e:	a2 2f       	mov	r26, r18
+ 180:	b3 2f       	mov	r27, r19
+ 182:	8c 91       	ld	r24, X
+ 184:	90 e0       	ldi	r25, 0x00	; 0
+ 186:	8f 5f       	subi	r24, 0xFF	; 255
+ 188:	9f 4f       	sbci	r25, 0xFF	; 255
+ 18a:	65 e0       	ldi	r22, 0x05	; 5
+ 18c:	70 e0       	ldi	r23, 0x00	; 0
+ 18e:	24 d0       	rcall	.+72     	; 0x1d8 <__divmodhi4>
+ 190:	e2 2f       	mov	r30, r18
+ 192:	f3 2f       	mov	r31, r19
+ 194:	80 83       	st	Z, r24
+			// set current RGB value
+			rgb[0] = pgm_read_byte(&red[colorIndex]);
+ 196:	e0 81       	ld	r30, Z
+ 198:	f0 e0       	ldi	r31, 0x00	; 0
+ 19a:	e0 5e       	subi	r30, 0xE0	; 224
+ 19c:	ff 4b       	sbci	r31, 0xBF	; 191
+ 19e:	e0 81       	ld	r30, Z
+ 1a0:	a0 e4       	ldi	r26, 0x40	; 64
+ 1a2:	b0 e0       	ldi	r27, 0x00	; 0
+ 1a4:	ec 93       	st	X, r30
+			rgb[1] = pgm_read_byte(&green[colorIndex]);
+ 1a6:	a2 2f       	mov	r26, r18
+ 1a8:	b3 2f       	mov	r27, r19
+ 1aa:	ec 91       	ld	r30, X
+ 1ac:	f0 e0       	ldi	r31, 0x00	; 0
+ 1ae:	e5 5e       	subi	r30, 0xE5	; 229
+ 1b0:	ff 4b       	sbci	r31, 0xBF	; 191
+ 1b2:	e0 81       	ld	r30, Z
+ 1b4:	a0 e4       	ldi	r26, 0x40	; 64
+ 1b6:	b0 e0       	ldi	r27, 0x00	; 0
+ 1b8:	af 5f       	subi	r26, 0xFF	; 255
+ 1ba:	bf 4f       	sbci	r27, 0xFF	; 255
+ 1bc:	ec 93       	st	X, r30
+			rgb[2] = pgm_read_byte(&blue[colorIndex]);
+ 1be:	a2 2f       	mov	r26, r18
+ 1c0:	b3 2f       	mov	r27, r19
+ 1c2:	ec 91       	ld	r30, X
+ 1c4:	f0 e0       	ldi	r31, 0x00	; 0
+ 1c6:	ea 5e       	subi	r30, 0xEA	; 234
+ 1c8:	ff 4b       	sbci	r31, 0xBF	; 191
+ 1ca:	e0 81       	ld	r30, Z
+ 1cc:	a0 e4       	ldi	r26, 0x40	; 64
+ 1ce:	b0 e0       	ldi	r27, 0x00	; 0
+ 1d0:	ae 5f       	subi	r26, 0xFE	; 254
+ 1d2:	bf 4f       	sbci	r27, 0xFF	; 255
+ 1d4:	ec 93       	st	X, r30
+ 1d6:	c6 cf       	rjmp	.-116    	; 0x164 <main+0x62>
+
+000001d8 <__divmodhi4>:
+ 1d8:	97 fb       	bst	r25, 7
+ 1da:	07 2f       	mov	r16, r23
+ 1dc:	16 f4       	brtc	.+4      	; 0x1e2 <__divmodhi4+0xa>
+ 1de:	00 95       	com	r16
+ 1e0:	06 d0       	rcall	.+12     	; 0x1ee <__divmodhi4_neg1>
+ 1e2:	77 fd       	sbrc	r23, 7
+ 1e4:	08 d0       	rcall	.+16     	; 0x1f6 <__divmodhi4_neg2>
+ 1e6:	0b d0       	rcall	.+22     	; 0x1fe <__udivmodhi4>
+ 1e8:	07 fd       	sbrc	r16, 7
+ 1ea:	05 d0       	rcall	.+10     	; 0x1f6 <__divmodhi4_neg2>
+ 1ec:	3e f4       	brtc	.+14     	; 0x1fc <__divmodhi4_exit>
+
+000001ee <__divmodhi4_neg1>:
+ 1ee:	90 95       	com	r25
+ 1f0:	81 95       	neg	r24
+ 1f2:	9f 4f       	sbci	r25, 0xFF	; 255
+ 1f4:	08 95       	ret
+
+000001f6 <__divmodhi4_neg2>:
+ 1f6:	70 95       	com	r23
+ 1f8:	61 95       	neg	r22
+ 1fa:	7f 4f       	sbci	r23, 0xFF	; 255
+
+000001fc <__divmodhi4_exit>:
+ 1fc:	08 95       	ret
+
+000001fe <__udivmodhi4>:
+ 1fe:	aa 1b       	sub	r26, r26
+ 200:	bb 1b       	sub	r27, r27
+ 202:	51 e1       	ldi	r21, 0x11	; 17
+ 204:	07 c0       	rjmp	.+14     	; 0x214 <__udivmodhi4_ep>
+
+00000206 <__udivmodhi4_loop>:
+ 206:	aa 1f       	adc	r26, r26
+ 208:	bb 1f       	adc	r27, r27
+ 20a:	a6 17       	cp	r26, r22
+ 20c:	b7 07       	cpc	r27, r23
+ 20e:	10 f0       	brcs	.+4      	; 0x214 <__udivmodhi4_ep>
+ 210:	a6 1b       	sub	r26, r22
+ 212:	b7 0b       	sbc	r27, r23
+
+00000214 <__udivmodhi4_ep>:
+ 214:	88 1f       	adc	r24, r24
+ 216:	99 1f       	adc	r25, r25
+ 218:	5a 95       	dec	r21
+ 21a:	a9 f7       	brne	.-22     	; 0x206 <__udivmodhi4_loop>
+ 21c:	80 95       	com	r24
+ 21e:	90 95       	com	r25
+ 220:	68 2f       	mov	r22, r24
+ 222:	79 2f       	mov	r23, r25
+ 224:	8a 2f       	mov	r24, r26
+ 226:	9b 2f       	mov	r25, r27
+ 228:	08 95       	ret
+
+0000022a <_exit>:
+ 22a:	f8 94       	cli
+
+0000022c <__stop_program>:
+ 22c:	ff cf       	rjmp	.-2      	; 0x22c <__stop_program>
